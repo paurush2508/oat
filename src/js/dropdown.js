@@ -1,19 +1,26 @@
 document.addEventListener('toggle', (e) => {
-  const menu = e.target;
-  if (!menu.matches('menu[popover]')) return;
+  const el = e.target;
+  if (!el.matches('menu[popover]')) return;
 
-  const trigger = document.querySelector(`[popovertarget="${menu.id}"]`);
+  const handle = document.querySelector(`[popovertarget="${el.id}"]`);
+
+  const position = () => {
+    const rect = handle.getBoundingClientRect();
+    el.style.top = `${rect.bottom}px`;
+    el.style.left = `${rect.left}px`;
+  };
 
   if (e.newState === 'open') {
-    const rect = trigger.getBoundingClientRect();
-    menu.style.top = `${rect.bottom}px`;
-    menu.style.left = `${rect.left}px`;
-    menu.querySelector('[role="menuitem"]')?.focus();
+    position();
+    window.addEventListener('scroll', position, true);
+    el._cleanup = () => window.removeEventListener('scroll', position, true);
+    el.querySelector('[role="menuitem"]')?.focus();
 
-    trigger?.setAttribute('aria-expanded', 'true');
+    handle?.setAttribute('aria-expanded', 'true');
   } else {
-    trigger?.setAttribute('aria-expanded', 'false');
-    trigger?.focus();
+    el._cleanup?.();
+    handle?.setAttribute('aria-expanded', 'false');
+    handle?.focus();
   }
 }, true);
 
@@ -21,10 +28,10 @@ document.addEventListener('keydown', (e) => {
   const item = e.target;
   if (!item.matches('[role="menuitem"]')) return;
 
-  const menu = item.closest('menu[popover]');
-  if (!menu?.matches(':popover-open')) return;
+  const el = item.closest('menu[popover]');
+  if (!el?.matches(':popover-open')) return;
 
-  const items = [...menu.querySelectorAll('[role="menuitem"]')];
+  const items = [...el.querySelectorAll('[role="menuitem"]')];
   const index = items.indexOf(item);
 
   switch (e.key) {
