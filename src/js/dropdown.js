@@ -1,175 +1,51 @@
-/**
- * lmui - Dropdown Component
- * Menu with keyboard navigation.
- *
- * Usage:
- * <lm-dropdown>
- *   <button data-trigger>Options</button>
- *   <div data-dropdown-menu hidden>
- *     <button data-dropdown-item data-value="edit">Edit</button>
- *     <button data-dropdown-item data-value="delete">Delete</button>
- *   </div>
- * </lm-dropdown>
- */
+document.addEventListener('toggle', (e) => {
+  const menu = e.target;
+  if (!menu.matches('menu[popover]')) return;
 
-class LMDropdown extends LMBase {
-  #trigger = null;
-  #menu = null;
-  #items = [];
-  #isOpen = false;
-  #boundDocumentClick = null;
+  const trigger = document.querySelector(`[popovertarget="${menu.id}"]`);
 
-  init() {
-    this.#trigger = this.$('[data-trigger]');
-    this.#menu = this.$('[data-dropdown-menu]');
+  if (e.newState === 'open') {
+    const rect = trigger.getBoundingClientRect();
+    menu.style.top = `${rect.bottom}px`;
+    menu.style.left = `${rect.left}px`;
+    menu.querySelector('[role="menuitem"]')?.focus();
 
-    if (!this.#trigger || !this.#menu) {
-      console.warn('lm-dropdown: Missing trigger or menu element');
-      return;
-    }
-
-    this.#items = this.$$('[data-dropdown-item]');
-
-    // Set up ARIA
-    const menuId = this.#menu.id || `lm-menu-${this.uid()}`;
-    this.#menu.id = menuId;
-    this.#trigger.setAttribute('aria-haspopup', 'true');
-    this.#trigger.setAttribute('aria-expanded', 'false');
-    this.#trigger.setAttribute('aria-controls', menuId);
-    this.#menu.setAttribute('role', 'menu');
-
-    // Set up items
-    this.#items.forEach(item => {
-      item.setAttribute('role', 'menuitem');
-      item.setAttribute('tabindex', '-1');
-    });
-
-    this.#trigger.addEventListener('click', this);
-    this.#trigger.addEventListener('keydown', this);
-    this.#menu.addEventListener('keydown', this);
-    this.#menu.addEventListener('click', this);
-
-    // Close on outside click
-    this.#boundDocumentClick = this.#onDocumentClick.bind(this);
-    document.addEventListener('click', this.#boundDocumentClick);
+    trigger?.setAttribute('aria-expanded', 'true');
+  } else {
+    trigger?.setAttribute('aria-expanded', 'false');
+    trigger?.focus();
   }
+}, true);
 
-  cleanup() {
-    if (this.#boundDocumentClick) {
-      document.removeEventListener('click', this.#boundDocumentClick);
-    }
+document.addEventListener('keydown', (e) => {
+  const item = e.target;
+  if (!item.matches('[role="menuitem"]')) return;
+
+  const menu = item.closest('menu[popover]');
+  if (!menu?.matches(':popover-open')) return;
+
+  const items = [...menu.querySelectorAll('[role="menuitem"]')];
+  const index = items.indexOf(item);
+
+  switch (e.key) {
+    case 'ArrowDown':
+      e.preventDefault();
+      items[(index + 1) % items.length]?.focus();
+      break;
+
+    case 'ArrowUp':
+      e.preventDefault();
+      items[index - 1 < 0 ? items.length - 1 : index - 1]?.focus();
+      break;
+
+    case 'Home':
+      e.preventDefault();
+      items[0]?.focus();
+      break;
+
+    case 'End':
+      e.preventDefault();
+      items[items.length - 1]?.focus();
+      break;
   }
-
-  #onDocumentClick(event) {
-    if (this.#isOpen && !this.contains(event.target)) {
-      this.close();
-    }
-  }
-
-  onclick(event) {
-    const target = event.target;
-
-    // Trigger click
-    if (this.#trigger.contains(target)) {
-      event.preventDefault();
-      event.stopPropagation();
-      this.toggle();
-      return;
-    }
-
-    // Item click
-    const item = target.closest('[data-dropdown-item]');
-    if (item && this.#menu.contains(item)) {
-      this.emit('lm-dropdown-select', {
-        item,
-        value: item.dataset.value
-      });
-      this.close();
-      this.#trigger.focus();
-    }
-  }
-
-  onkeydown(event) {
-    const { key } = event;
-
-    // Trigger keyboard
-    if (event.target === this.#trigger) {
-      if (key === 'ArrowDown' || key === 'Enter' || key === ' ') {
-        event.preventDefault();
-        this.open();
-        this.#focusFirst();
-      }
-      return;
-    }
-
-    // Menu keyboard
-    const currentIndex = this.#items.indexOf(document.activeElement);
-
-    switch (key) {
-      case 'ArrowDown':
-        event.preventDefault();
-        this.#focusAt((currentIndex + 1) % this.#items.length);
-        break;
-      case 'ArrowUp':
-        event.preventDefault();
-        this.#focusAt(currentIndex - 1 < 0 ? this.#items.length - 1 : currentIndex - 1);
-        break;
-      case 'Home':
-        event.preventDefault();
-        this.#focusFirst();
-        break;
-      case 'End':
-        event.preventDefault();
-        this.#focusAt(this.#items.length - 1);
-        break;
-      case 'Escape':
-        event.preventDefault();
-        this.close();
-        this.#trigger.focus();
-        break;
-      case 'Enter':
-      case ' ':
-        event.preventDefault();
-        if (currentIndex >= 0) {
-          this.#items[currentIndex].click();
-        }
-        break;
-    }
-  }
-
-  #focusFirst() {
-    this.#items[0]?.focus();
-  }
-
-  #focusAt(index) {
-    this.#items[index]?.focus();
-  }
-
-  open() {
-    if (this.#isOpen) return;
-    this.#isOpen = true;
-    this.#menu.hidden = false;
-    this.#trigger.setAttribute('aria-expanded', 'true');
-    this.setAttribute('data-state', 'open');
-    this.emit('lm-dropdown-open');
-  }
-
-  close() {
-    if (!this.#isOpen) return;
-    this.#isOpen = false;
-    this.#menu.hidden = true;
-    this.#trigger.setAttribute('aria-expanded', 'false');
-    this.setAttribute('data-state', 'closed');
-    this.emit('lm-dropdown-close');
-  }
-
-  toggle() {
-    this.#isOpen ? this.close() : this.open();
-  }
-
-  get isOpen() {
-    return this.#isOpen;
-  }
-}
-
-customElements.define('lm-dropdown', LMDropdown);
+});

@@ -71,7 +71,7 @@
           <a href="#accordion">Accordion</a>
           <a href="#tabs">Tabs</a>
           <a href="#dialog">Dialog</a>
-          <a href="#dropdown">Dropdown</a>
+          <a href="#dropdown">Dropdown Menu</a>
           <a href="#toast">Toast</a>
           <a href="#sidebar">Sidebar</a>
           <a href="#grid">Grid</a>
@@ -481,38 +481,36 @@
         </lm-dialog>
       </section>
 
-      <!-- Dropdown -->
+      <!-- Dropdown Menu -->
       <section id="dropdown" class="demo-section">
-        <h2>Dropdown</h2>
-        <p>Menu with keyboard navigation.</p>
+        <h2>Dropdown Menu</h2>
+        <p>Popover menu with keyboard navigation.</p>
 
         <lm-demo>
           <template>
-            <lm-dropdown>
-              <button data-trigger class="outline">
-                Options
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" /></svg>
+            <button popovertarget="demo-menu" class="outline">
+              Options
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6" /></svg>
+            </button>
+            <menu popover id="demo-menu">
+              <button role="menuitem">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 4-6 8-6s8 2 8 6" /></svg>
+                Profile
               </button>
-              <div data-dropdown-menu hidden>
-                <button data-dropdown-item data-value="profile">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 4-6 8-6s8 2 8 6" /></svg>
-                  Profile
-                </button>
-                <button data-dropdown-item data-value="settings">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3" /><path d="M12 1v4m0 14v4M4.22 4.22l2.83 2.83m9.9 9.9l2.83 2.83M1 12h4m14 0h4M4.22 19.78l2.83-2.83m9.9-9.9l2.83-2.83" /></svg>
-                  Settings
-                </button>
-                <button data-dropdown-item data-value="help">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><path d="M9 9a3 3 0 115 2.83c-.83.5-2 1.17-2 2.17m0 4h.01" /></svg>
-                  Help
-                </button>
-                <hr style="margin: var(--lm-space-1) 0;">
-                <button data-dropdown-item data-value="logout">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4m7 14l5-5-5-5m5 5H9" /></svg>
-                  Logout
-                </button>
-              </div>
-            </lm-dropdown>
+              <button role="menuitem">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3" /><path d="M12 1v4m0 14v4M4.22 4.22l2.83 2.83m9.9 9.9l2.83 2.83M1 12h4m14 0h4M4.22 19.78l2.83-2.83m9.9-9.9l2.83-2.83" /></svg>
+                Settings
+              </button>
+              <button role="menuitem">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><path d="M9 9a3 3 0 115 2.83c-.83.5-2 1.17-2 2.17m0 4h.01" /></svg>
+                Help
+              </button>
+              <hr style="margin: var(--lm-space-1) 0;">
+              <button role="menuitem">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4m7 14l5-5-5-5m5 5H9" /></svg>
+                Logout
+              </button>
+            </menu>
           </template>
         </lm-demo>
       </section>
@@ -630,10 +628,6 @@
       });
     }
 
-    // Log dropdown selections
-    document.querySelector('lm-dropdown').addEventListener('lm-dropdown-select', (e) => {
-      console.log('Selected:', e.detail.value);
-    });
   </script>
 </body>
 

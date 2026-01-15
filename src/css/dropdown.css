@@ -1,28 +1,39 @@
 @layer components {
-  lm-dropdown {
-    position: relative;
-    display: inline-block;
-  }
-
-  [data-dropdown-menu], .dropdown-menu {
-    position: absolute;
-    z-index: var(--lm-z-dropdown);
-    min-width: 12rem;
+  menu[popover] {
+    position: fixed;
+    margin: 0;
     padding: var(--lm-space-1);
+    list-style: none;
+    min-width: 12rem;
     background-color: var(--lm-background);
     border: 1px solid var(--lm-border);
     border-radius: var(--lm-radius);
     box-shadow: var(--lm-shadow-md);
+    opacity: 0;
+    transform: translateY(-4px);
+    transition:
+      opacity 150ms ease-out,
+      transform 150ms ease-out,
+      display 150ms allow-discrete,
+      overlay 150ms allow-discrete;
 
-    &[hidden] {
-      display: none;
+    &:popover-open {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @starting-style {
+      &:popover-open {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
     }
   }
 
-  [data-dropdown-item], .dropdown-item {
+  [role="menuitem"] {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: left;
     gap: var(--lm-space-2);
     width: 100%;
     padding: var(--lm-space-2) var(--lm-space-3);
@@ -33,14 +44,13 @@
     border: none;
     border-radius: var(--lm-radius-sm);
     cursor: pointer;
-    transition: background-color var(--lm-transition-fast);
 
     &:hover, &:focus {
       background-color: var(--lm-accent);
       outline: none;
     }
 
-    &[data-disabled], &:disabled {
+    &:disabled {
       opacity: 0.5;
       cursor: not-allowed;
     }
