@@ -3,7 +3,7 @@
     display: inline-flex;
     align-items: center;
     gap: var(--lm-space-1);
-    padding: 0.125rem var(--lm-space-2);
+    padding: var(--lm-space-1) var(--lm-space-4);
     font-size: var(--lm-text-8);
     font-weight: var(--lm-font-medium);
     line-height: var(--lm-leading-normal);
@@ -22,19 +22,33 @@
       border: 1px solid var(--lm-border);
     }
 
-    &.danger {
-      background-color: var(--lm-danger);
-      color: var(--lm-danger-foreground);
-    }
-
     &.success {
-      background-color: var(--lm-success);
-      color: var(--lm-success-foreground);
+      color: var(--lm-success);
+      background-color: color-mix(in srgb, var(--lm-success) 12%, white);
     }
 
     &.warning {
-      background-color: var(--lm-warning);
-      color: var(--lm-warning-foreground);
+      color: var(--lm-warning);
+      background-color: color-mix(in srgb, var(--lm-warning) 12%, white);
+    }
+
+    &.danger {
+      color: var(--lm-danger);
+      background-color: color-mix(in srgb, var(--lm-danger) 15%, white);
+    }
+
+    [data-theme="dark"] & {
+      &.success {
+        background-color: color-mix(in srgb, var(--lm-success) 40%, black);
+      }
+
+      &.warning {
+        background-color: color-mix(in srgb, var(--lm-warning) 40%, black);
+      }
+
+      &.danger {
+        background-color: color-mix(in srgb, var(--lm-danger) 40%, black);
+      }
     }
   }
 }

@@ -9,9 +9,13 @@
     border-radius: var(--lm-radius);
     font-size: var(--lm-text-7);
 
+    &[data-variant] {
+      border: none;
+    }
+
     &[data-variant="error"], &[data-variant="danger"] {
-      border-color: rgb(from var(--lm-danger) r g b / 0.5);
       color: var(--lm-danger);
+      background-color: color-mix(in srgb, var(--lm-danger) 8%, white);
 
       & a {
         color: var(--lm-danger);
@@ -19,8 +23,8 @@
     }
 
     &[data-variant="success"] {
-      border-color: rgb(from var(--lm-success) r g b / 0.5);
       color: var(--lm-success);
+      background-color: color-mix(in srgb, var(--lm-success) 8%, white);
 
       & a {
         color: var(--lm-success);
@@ -28,11 +32,25 @@
     }
 
     &[data-variant="warning"] {
-      border-color: rgb(from var(--lm-warning) r g b / 0.5);
       color: var(--lm-warning);
+      background-color: color-mix(in srgb, var(--lm-warning) 8%, white);
 
       & a {
         color: var(--lm-warning);
+      }
+    }
+
+    [data-theme="dark"] & {
+      &[data-variant="error"], &[data-variant="danger"] {
+        background-color: color-mix(in srgb, var(--lm-danger) 20%, black);
+      }
+
+      &[data-variant="success"] {
+        background-color: color-mix(in srgb, var(--lm-success) 20%, black);
+      }
+
+      &[data-variant="warning"] {
+        background-color: color-mix(in srgb, var(--lm-warning) 20%, black);
       }
     }
   }

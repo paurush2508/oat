@@ -12,7 +12,7 @@ The `<button>` element is styled by default. Add classes for variants.
 <button class="secondary">Secondary</button>
 <button class="outline">Outline</button>
 <button class="ghost">Ghost</button>
-<button class="danger">danger</button>
+<button class="danger">Danger</button>
 <button disabled>Disabled</button>
 ```
 {% end %}

@@ -14,11 +14,11 @@
     --lm-faint-foreground: rgb(161 161 170);
     --lm-accent: rgb(244 244 245);
     --lm-accent-foreground: rgb(24 24 27);
-    --lm-danger: rgb(239 68 68);
+    --lm-danger: rgb(223 81 76);
     --lm-danger-foreground: rgb(250 250 250);
-    --lm-success: rgb(34 197 94);
+    --lm-success: rgb(76 175 80);
     --lm-success-foreground: rgb(250 250 250);
-    --lm-warning: rgb(234 179 8);
+    --lm-warning: rgb(255 140 0);
     --lm-warning-foreground: rgb(9 9 11);
     --lm-border: rgb(228 228 231);
     --lm-input: rgb(228 228 231);
@@ -80,8 +80,7 @@
     --lm-z-toast: 300;
   }
 
-  [data-theme="dark"],
-  .dark {
+  [data-theme="dark"] {
     --lm-background: rgb(9 9 11);
     --lm-foreground: rgb(250 250 250);
     --lm-card: rgb(9 9 11);
@@ -96,8 +95,12 @@
     --lm-faint-foreground: rgb(113 113 122);
     --lm-accent: rgb(39 39 42);
     --lm-accent-foreground: rgb(250 250 250);
-    --lm-danger: rgb(127 29 29);
+    --lm-danger: rgb(223 81 76);
     --lm-danger-foreground: rgb(250 250 250);
+    --lm-success: rgb(76 175 80);
+    --lm-success-foreground: rgb(250 250 250);
+    --lm-warning: rgb(255 229 18);
+    --lm-warning-foreground: rgb(9 9 11);
     --lm-border: rgb(39 39 42);
     --lm-input: rgb(39 39 42);
     --lm-ring: rgb(212 212 216);
@@ -119,8 +122,12 @@
       --lm-faint-foreground: rgb(113 113 122);
       --lm-accent: rgb(39 39 42);
       --lm-accent-foreground: rgb(250 250 250);
-      --lm-danger: rgb(127 29 29);
+      --lm-danger: rgb(223 81 76);
       --lm-danger-foreground: rgb(250 250 250);
+      --lm-success: rgb(76 175 80);
+      --lm-success-foreground: rgb(250 250 250);
+      --lm-warning: rgb(255 229 18);
+      --lm-warning-foreground: rgb(9 9 11);
       --lm-border: rgb(39 39 42);
       --lm-input: rgb(39 39 42);
       --lm-ring: rgb(212 212 216);
