@@ -51,8 +51,6 @@
     }
 
     &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
       background-color: var(--lm-muted);
     }
 
@@ -90,25 +88,9 @@
     cursor: pointer;
     transition: background-color var(--lm-transition-fast), border-color var(--lm-transition-fast);
 
-    &:focus-visible {
-      outline: 2px solid var(--lm-ring);
-      outline-offset: 2px;
-    }
-
     &:checked {
       background-color: var(--lm-primary);
       border-color: var(--lm-primary);
-    }
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-  }
-
-  input[type="checkbox"],
-  input[type="radio"] {
-    &:checked {
       background-position: center;
       background-repeat: no-repeat;
     }
@@ -222,13 +204,13 @@
       border-radius: 0;
 
       &:first-child {
-        border-top-left-radius: var(--lm-radius);
-        border-bottom-left-radius: var(--lm-radius);
+        border-start-start-radius: var(--lm-radius);
+        border-end-start-radius: var(--lm-radius);
       }
 
       &:last-child {
-        border-top-right-radius: var(--lm-radius);
-        border-bottom-right-radius: var(--lm-radius);
+        border-start-end-radius: var(--lm-radius);
+        border-end-end-radius: var(--lm-radius);
       }
     }
 
@@ -246,11 +228,11 @@
       border: 1px solid var(--lm-input);
 
       &:first-child {
-        border-right: none;
+        border-inline-end: none;
       }
 
       &:last-child {
-        border-left: none;
+        border-inline-start: none;
       }
     }
   }
@@ -261,7 +243,7 @@
     margin: 0;
 
     & > legend {
-      float: left;
+      float: inline-start;
       padding: 0 var(--lm-space-3);
       height: 2.5rem;
       line-height: 2.5rem;
@@ -269,7 +251,7 @@
       color: var(--lm-muted-foreground);
       background-color: var(--lm-muted);
       border: 1px solid var(--lm-input);
-      border-right: none;
+      border-inline-end: none;
       border-radius: var(--lm-radius) 0 0 var(--lm-radius);
     }
 
@@ -295,18 +277,12 @@
       margin-bottom: var(--lm-space-2);
     }
 
-    & > .error, & > [data-error],
-    & > .hint, & > [data-hint] {
+    & > :is(.error, [data-error], .hint, [data-hint]) {
       font-size: var(--lm-text-7);
       margin-top: var(--lm-space-1);
     }
 
-    & > .error, & > [data-error] {
-      color: var(--lm-danger);
-    }
-
-    & > .hint, & > [data-hint] {
-      color: var(--lm-muted-foreground);
-    }
+    & > :is(.error, [data-error]) { color: var(--lm-danger); }
+    & > :is(.hint, [data-hint]) { color: var(--lm-muted-foreground); }
   }
 }

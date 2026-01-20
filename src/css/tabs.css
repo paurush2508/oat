@@ -32,11 +32,6 @@
       color: var(--lm-foreground);
       box-shadow: var(--lm-shadow-small);
     }
-
-    &:focus-visible {
-      outline: 2px solid var(--lm-ring);
-      outline-offset: 2px;
-    }
   }
 
   [role="tabpanel"] {

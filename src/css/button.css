@@ -27,16 +27,6 @@
       transform: translate(1px, 1px);
     }
 
-    &:focus-visible {
-      outline: 2px solid var(--lm-ring);
-      outline-offset: 2px;
-    }
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
     &.secondary {
       background-color: var(--lm-secondary);
       color: var(--lm-secondary-foreground);
@@ -115,17 +105,17 @@
       border-radius: 0;
 
       &:first-child {
-        border-top-left-radius: var(--lm-radius);
-        border-bottom-left-radius: var(--lm-radius);
+        border-start-start-radius: var(--lm-radius);
+        border-end-start-radius: var(--lm-radius);
       }
 
       &:last-child {
-        border-top-right-radius: var(--lm-radius);
-        border-bottom-right-radius: var(--lm-radius);
+        border-start-end-radius: var(--lm-radius);
+        border-end-end-radius: var(--lm-radius);
       }
 
       &:not(:last-child) {
-        border-right: 1px solid rgb(from var(--lm-primary-foreground) r g b / 0.2);
+        border-inline-end: 1px solid rgb(from var(--lm-primary-foreground) r g b / 0.2);
       }
     }
   }
