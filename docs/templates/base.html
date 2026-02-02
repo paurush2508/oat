@@ -216,7 +216,7 @@
               {% set components = get_section(path="components/_index.md") %}
               {% for page in components.pages %}
               <li><a href="/components/#{{ page.slug }}">{{ page.title }}
-                {% if page.extra.webcomponent | default(value=false) %}<sup>WebComponent</sup>{% endif %}</a></li>
+                {% if page.extra.webcomponent | default(value=false) %}<sup title="WebComponent">WC</sup>{% endif %}</a></li>
               {% endfor %}
             </ul>
           </details>
